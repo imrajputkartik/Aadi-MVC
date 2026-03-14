@@ -8,5 +8,6 @@
 </head>
 <body bgcolor="red">
 	<h1>this is admin protal......</h1>
+	<h2>Username: ${userName}</h2>
 </body>
 </html>
