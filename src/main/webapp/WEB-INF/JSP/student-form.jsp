@@ -8,13 +8,12 @@
 </head>
 <body bgcolor="grey">
 	<h2>Student form</h2>
-	<form action="${pageContext.request.contextPath}/getStdnt" method="post">
-		<label for="name">Name:</label> <input type="text" id="name"
-			name="name" /><br />
-		<br /> <label for="department">Department:</label> <input type="text"
-			id="department" name="department" /><br />
-		<br /> <label for="age">Age:</label> <input type="number" id="age"
-			name="age" /><br />
+	<form action="${pageContext.request.contextPath}/saveStud" method="post">
+		<label for="id">Id: </label> <input type="number" name="id"><br>
+		<br> <label for="name">Name:</label> <input type="text" id="name"
+			name="name" /><br /> <br /> <label for="department">Department:</label>
+		<input type="text" id="department" name="department" /><br /> <br />
+		<label for="age">Age:</label> <input type="number" id="age" name="age" /><br />
 		<br />
 		<button type="submit">Submit</button>
 	</form>

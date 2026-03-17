@@ -8,8 +8,9 @@
 </head>
 <body>
 	<h1>this is a Student Profile.....</h1>
-	<h2>Name is: ${stdnt.name}</h2>
-	<h2>Department is: ${stdnt.department}</h2>
-	<h2>Age is: ${stdnt.age}</h2>
+	<h2>Id is: ${stud.id}</h2>
+	<h2>Name is: ${stud.name}</h2>
+	<h2>Department is: ${stud.department}</h2>
+	<h2>Age is: ${stud.age}</h2>
 </body>
 </html>
