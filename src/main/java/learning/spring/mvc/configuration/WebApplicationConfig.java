@@ -1,12 +1,13 @@
 package learning.spring.mvc.configuration;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;  // ✅ IMPORTANT
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRegistration;  // ✅ IMPORTANT
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebApplicationConfig implements WebApplicationInitializer {
 
@@ -15,14 +16,22 @@ public class WebApplicationConfig implements WebApplicationInitializer {
 
         System.out.println("WebApplicationConfig.onStartup()");
 
-        AnnotationConfigWebApplicationContext annWebConfig = new AnnotationConfigWebApplicationContext();
-        annWebConfig.register(SpringConfiguration.class);
-        annWebConfig.setServletContext(ctx);
+        // 🔹 ROOT CONTEXT (Hibernate, DB, Services)
+        AnnotationConfigWebApplicationContext rootContext =
+                new AnnotationConfigWebApplicationContext();
+        rootContext.register(RootConfig.class);
 
-        ServletRegistration.Dynamic servlet = ctx.addServlet("dispatcher",
-                new DispatcherServlet(annWebConfig));
+        ctx.addListener(new ContextLoaderListener(rootContext));
 
-        servlet.setLoadOnStartup(1);
-        servlet.addMapping("/");
+        // 🔹 WEB CONTEXT (Spring MVC)
+        AnnotationConfigWebApplicationContext webContext =
+                new AnnotationConfigWebApplicationContext();
+        webContext.register(SpringConfiguration.class);
+
+        ServletRegistration.Dynamic dispatcher =
+                ctx.addServlet("dispatcher", new DispatcherServlet(webContext));
+
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
     }
 }
